@@ -48,7 +48,8 @@ class Main extends Component {
       <>
         <SearchBar label={"Name"} handle={this.handleNameFilter} />
         <SearchBar label={"Age"} handle={this.handleAgeFilter} />
-        <Drop data={this.state.sampleData}/>
+        <Drop sort={"City"}/>
+        <Drop sort={"Occupation"}/>
         <Table data={this.state.data} />
       </>
     );
