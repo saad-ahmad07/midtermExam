@@ -1,60 +1,58 @@
-import React, { useState } from 'react'
-import { sampleData } from '../data'
-function Main() {
+import React, { Component, useState } from "react";
+import { sampleData } from "../data";
+import SearchBar from "./SearchBar";
+import Table from "./Table";
+import Drop from "./Drop";
 
-   const [data,setData] = useState(sampleData)
+class Main extends Component {
+  state = {
+    data: sampleData,
+    name: "",
+    age: 0,
+  };
+  //  const [data,setData] = useState(sampleData)
+  //  const [name,setName] = useState()
+  //  const [age,setAge] = useState()
 
-  //  console.log(data)
-  return (
+  handleNameFilter = (input) => {
+    let a = this.state.data.filter((item) => {
+      return item.name.toLowerCase().includes(input.toLowerCase());
+    });
+    //  console.log(input);
+    if (a.length != 0) {
+      this.setState({ data: a });
+    } else {
+      this.setState({ data: sampleData });
+    }
+    console.log(a);
+  };
 
-    <table className='table'>
-      <thead>
+  handleAgeFilter = (input) => {
+    input = parseInt(input);
+    let a = this.state.data.filter((item) => {
+      return item.age == input;
+    });
 
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Age</th>
-        <th>City</th>
-        <th>Occupation</th>
-        </tr>
-      </thead>
-      
-     
-     <tbody>
-      
+    if (a.length != 0) {
+      this.setState({ data: a });
+    } else {
+      this.setState({ data: sampleData });
+    }
+    //  setData(a)
 
-     {
-        data.map((item)=>(
-          <tr key={item.id}>
-          <td>{item.id}</td>
-          <td>{item.name}</td>
-          <td>{item.age}</td>
-          <td>{item.city}</td>
-          <td>{item.occupation}</td>
-          </tr>
-          // console.log(item);
-        ))
-      }
+    console.log(a);
+  };
 
-{/* <tbody>
-           { this.state.classes.map((obj) => (
-
-            <tr>
-            <td>{obj.id}</td>
-            <td>{obj.name}</td>
-            <td>{obj.batch}</td>
-            <td><input onClick={() => this.handleSelectedClass(obj)} name="classSelect" className='form-check' type="radio" /></td> 
-            </tr>
-
-            ))}
-            
-          </tbody> */}
-
-     </tbody>
-       
-       
-    </table>
-  )
+  render() {
+    return (
+      <>
+        <SearchBar label={"Name"} handle={this.handleNameFilter} />
+        <SearchBar label={"Age"} handle={this.handleAgeFilter} />
+        <Drop data={this.state.sampleData}/>
+        <Table data={this.state.data} />
+      </>
+    );
+  }
 }
 
-export default Main
+export default Main;
